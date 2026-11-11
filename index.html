@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela de Login</title>
+    <style>
+        /* Reset básico e fonte */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Centraliza o formulário na tela */
+        body {
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Caixa branca do login */
+        .login-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 350px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        /* Estilo visual para quando der erro */
+        input.input-error {
+            border-color: #dc3545;
+            background-color: #fff8f8;
+        }
+
+        .error-msg {
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none; /* Escondido por padrão */
+        }
+
+        /* Alerta geral de erro (ex: usuário ou senha incorretos) */
+        .general-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 13px;
+            margin-bottom: 15px;
+            text-align: center;
+            display: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>Entrar</h2>
+        
+        <!-- Mensagem de erro geral (ex: dados inválidos) -->
+        <div id="generalError" class="general-error">E-mail ou senha incorretos.</div>
+
+        <!-- O atributo "novalidate" desativa os balões padrão do navegador para usarmos os nossos -->
+        <form id="loginForm" novalidate>
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" placeholder="seu@email.com">
+                <div id="emailError" class="error-msg">Digite um e-mail válido.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" placeholder="Sua senha">
+                <div id="senhaError" class="error-msg">A senha é obrigatória.</div>
+            </div>
+
+            <button type="submit">Entrar</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const emailInput = document.getElementById('email');
+            const senhaInput = document.getElementById('senha');
+            const emailError = document.getElementById('emailError');
+            const senhaError = document.getElementById('senhaError');
+            const generalError = document.getElementById('generalError');
+
+            let isValid = true;
+
+            // Limpa erros anteriores
+            generalError.style.display = 'none';
+
+            // Validação do E-mail
+            if (!emailInput.value || !emailInput.value.includes('@')) {
+                emailError.style.display = 'block';
+                emailInput.classList.add('input-error');
+                isValid = false;
+            } else {
+                emailError.style.display = 'none';
+                emailInput.classList.remove('input-error');
+            }
+
+            // Validação da Senha
+            if (!senhaInput.value) {
+                senhaError.style.display = 'block';
+                senhaInput.classList.add('input-error');
+                isValid = false;
+            } else {
+                senhaError.style.display = 'none';
+                senhaInput.classList.remove('input-error');
+            }
+
+            // Simulação de verificação de login
+            if (isValid) {
+                if (emailInput.value === 'admin@teste.com' && senhaInput.value === '1234') {
+                    alert('Login realizado com sucesso!');
+                } else {
+                    generalError.style.display = 'block';
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
